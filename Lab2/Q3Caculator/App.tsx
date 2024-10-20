@@ -1,118 +1,159 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Text, SafeAreaView, View, TouchableOpacity} from 'react-native';
+import styles from './style';
+import {useState} from 'react';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+export default function App() {
+  const [displayValue, setDisplayValue] = useState('0');
+  const [operator, setOperator] = useState(null);
+  const [firstValue, setFirstValue] = useState(null);
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+  const handleNumberInput = num => {
+    if (displayValue === '0') {
+      setDisplayValue(num.toString());
+    } else {
+      setDisplayValue(displayValue + num);
+    }
+  };
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+  const handleOperatorInput = op => {
+    if (firstValue === null) {
+      setFirstValue(parseFloat(displayValue));
+      setOperator(op);
+      setDisplayValue('0');
+    } else {
+      calculate();
+      setOperator(op);
+    }
+  };
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const calculate = () => {
+    if (firstValue !== null && operator) {
+      const secondValue = parseFloat(displayValue);
+      let result;
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+      switch (operator) {
+        case '+':
+          result = firstValue + secondValue;
+          break;
+        case '-':
+          result = firstValue - secondValue;
+          break;
+        case 'x':
+          result = firstValue * secondValue;
+          break;
+        case '/':
+          result = firstValue / secondValue;
+          break;
+        default:
+          return;
+      }
+
+      setDisplayValue(result.toString());
+      setFirstValue(null);
+      setOperator(null);
+    }
+  };
+
+  const clear = () => {
+    setDisplayValue('0');
+    setFirstValue(null);
+    setOperator(null);
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <SafeAreaView style={styles.container_default}>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <Text style={styles.display}>{displayValue}</Text>
         </View>
-      </ScrollView>
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('7')}>
+            <Text style={styles.num}>7</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('8')}>
+            <Text style={styles.num}>8</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('9')}>
+            <Text style={styles.num}>9</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.calculus}
+            onPress={() => handleOperatorInput('/')}>
+            <Text style={styles.textCal}>/</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('4')}>
+            <Text style={styles.num}>4</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('5')}>
+            <Text style={styles.num}>5</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('6')}>
+            <Text style={styles.num}>6</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.calculus}
+            onPress={() => handleOperatorInput('x')}>
+            <Text style={styles.textCal}>x</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('1')}>
+            <Text style={styles.num}>1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('2')}>
+            <Text style={styles.num}>2</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.number}
+            onPress={() => handleNumberInput('3')}>
+            <Text style={styles.num}>3</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.calculus}
+            onPress={() => handleOperatorInput('-')}>
+            <Text style={styles.textCal}>-</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.number0}
+            onPress={() => handleNumberInput('0')}>
+            <Text style={styles.num}>0</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.calculus}
+            onPress={() => handleOperatorInput('+')}>
+            <Text style={styles.textCal}>+</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.result} onPress={calculate}>
+            <Text style={styles.num}>=</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.clear} onPress={clear}>
+            <Text style={styles.num}>C</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
