@@ -11,7 +11,7 @@ const port = 3000;
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password:'password',
+    password:'123',
     database:'nodejs_demo'
 });
 
@@ -54,54 +54,54 @@ app.get('/api/users', (req, res) => {
     });
 });
 
-// //3 Get a specific user by ID (Get request)
-// app.get('/api/users/:id', (req, res)=>{
-//     const userId = req.params.id;
-//     const sql = 'SELECT * FROM users WHERE id = ?';
+//3 Get a specific user by ID (Get request)
+app.get('/api/users/:id', (req, res)=>{
+    const userId = req.params.id;
+    const sql = 'SELECT * FROM users WHERE id = ?';
 
-//     db.query(sql, [userId], (err,results) =>{
-//         if(err){
-//             res.status(500).json({message: 'Error fetching user', error: err});
-//         } else if (results.length === 0){
-//             res.status(404).json({message: 'User not found'});
-//         } else {
-//             res.json({message: 'User updated'})
-//         }
-//     });
-// });
+    db.query(sql, [userId], (err,results) =>{
+        if(err){
+            res.status(500).json({message: 'Error fetching user', error: err});
+        } else if (results.length === 0){
+            res.status(404).json({message: 'User not found'});
+        } else {
+            res.json({message: 'User updated'})
+        }
+    });
+});
 
-// //4.Update a user by ID (Put request)
-// app.put('/api/users/:id', (req, res) => {
-//     const userId = req.params.id;
-//     const {name, email} = req.body;
-//     const sql = 'UPDATE users SET name = ?, email = ? WHERE id = ?';
+//4.Update a user by ID (Put request)
+app.put('/api/users/:id', (req, res) => {
+    const userId = req.params.id;
+    const {name, email} = req.body;
+    const sql = 'UPDATE users SET name = ?, email = ? WHERE id = ?';
 
-//     db.query(sql, [name, email, userId], (err, result) => {
-//         if(err){
-//             res.status(500).json({message: 'Error updating user', error: err});
-//         } else if (result.affectedRows === 0){
-//             res.status(404).json({ message: 'User not found'});
-//         } else {
-//             res.json({message: 'User updated'})
-//         }
-//     });
-// });
+    db.query(sql, [name, email, userId], (err, result) => {
+        if(err){
+            res.status(500).json({message: 'Error updating user', error: err});
+        } else if (result.affectedRows === 0){
+            res.status(404).json({ message: 'User not found'});
+        } else {
+            res.json({message: 'User updated'})
+        }
+    });
+});
 
-// //5 Delete a user by ID (DELETE request)
-// app.delete('/api/users/:id', (req,res) => {
-//     const userId = req.params.id;
-//     const sql = 'DELETE FROM users WHERE id = ?';
+//5 Delete a user by ID (DELETE request)
+app.delete('/api/users/:id', (req,res) => {
+    const userId = req.params.id;
+    const sql = 'DELETE FROM users WHERE id = ?';
 
-//     db.query(sql, [userId], (err, result) => {
-//         if(err){
-//             res.status(500).json({ message: 'Error deleting user', error: err});
-//         } else if (result.affectedRows === 0){
-//             res.status(404).json({message: 'User not found'});
-//         } else {
-//             res.json({message: 'User deleted'});
-//         }
-//     });
-// });
+    db.query(sql, [userId], (err, result) => {
+        if(err){
+            res.status(500).json({ message: 'Error deleting user', error: err});
+        } else if (result.affectedRows === 0){
+            res.status(404).json({message: 'User not found'});
+        } else {
+            res.json({message: 'User deleted'});
+        }
+    });
+});
 
 //Start the server 
 app.listen(port, () => {
