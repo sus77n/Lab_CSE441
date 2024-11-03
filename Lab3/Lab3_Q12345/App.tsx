@@ -5,28 +5,31 @@ import Add from './Products/Product_Add';
 import Search from './Products/Product_Search';
 import Detail from './Products/Product_Detail';
 
-import { BottomNavigation} from 'react-native-paper';
+import { BottomNavigation, Button} from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
 export default App = () => {
   const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: 'Product', title: 'Products', focusedIcon: 'album'},
-    { key: 'Add', title: 'Add', focusedIcon: 'heart'},
-    { key: 'Search', title: 'Search', focusedIcon: 'folder'},
-    { key: 'Detail', title:'Detail', focusedIcon: 'home'},
+  const [routes] = React.useState([
+    { key: 'product', title: 'Products', focusedIcon: 'bell'},
+    { key: 'add', title: 'Add', focusedIcon: 'heart'},
+    { key: 'search', title: 'Search', focusedIcon: 'folder'},
+    { key: 'detail', title:'Detail', focusedIcon: 'home'},
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    Product: Product,
-    Add: Add,
-    Search: Search,
-    Detail: Detail,
+    product: Product,
+    add: Add,
+    search: Search,
+    detail: Detail,
   });
 
   return (
     <SafeAreaProvider>
+      <Button icon="camera">
+  Press me
+</Button>
       <BottomNavigation
         navigationState={{index, routes}}
         onIndexChange={setIndex}

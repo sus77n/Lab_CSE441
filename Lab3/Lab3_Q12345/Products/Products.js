@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { View, Text, FlatList, SafeAreaView, Image, Button } from "react-native";
 import styles from "./StyleProduct";
+
 function Product () {
     const [data, setData] = useState([]);
     const filePath ='https://dummyjson.com/products/';
@@ -25,7 +26,6 @@ function Product () {
         <SafeAreaView style={styles.container}>
             <View>
                 <Text style ={styles.title}>Product list</Text>
-    
             </View>
             <FlatList
                 data={data}
