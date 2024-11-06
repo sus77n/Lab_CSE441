@@ -6,6 +6,7 @@ import ContactThum from './ContactThum';
 
 
 const keyExtractor = ({phone }) => phone;
+
 const Favorites = ({navigation}) => {
     const {contacts} = useSelector((state) => state);
     const renderFavoriteThumnail = ({item}) => {

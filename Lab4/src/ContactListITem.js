@@ -16,7 +16,7 @@ const ContactListItem = ({name, avatar, phone, onPress}) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingLeft: 50,
+        paddingLeft: 5,
         marginTop: 0,
     },
     contactInfo: {

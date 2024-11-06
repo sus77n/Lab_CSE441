@@ -5,7 +5,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import ContactListItem from './ContactListITem';
 import React  from 'react';
 
-const keyExtractor = ({phone}) => phone;
+
 const fetchContacts = async () =>{
     const data = await fetch('https://randomuser.me/api/?results=50');
     const ContactData = await data.json();
@@ -13,13 +13,12 @@ const fetchContacts = async () =>{
 };
 
 const Contacts = ({ navigation }) => {
-    const {contacts} = useSelector((state) => state.contacts);
     const dispatch = useDispatch();
     useEffect(() => {
         fetchContacts()
         .then(
-            contacts => {
-                dispatch(fetchContactsSuccess(contacts));
+            aaa => {
+                dispatch(fetchContactsSuccess(aaa));
             }
         )
         .catch(
@@ -28,12 +27,11 @@ const Contacts = ({ navigation }) => {
             }
         )
     }, []);
-
-    useEffect(() => {
-        console.log(contacts);
-    }, [contacts]);
-
-    const renderContacts = ({ item }) => {
+    
+    const keyExtractor = ({phone}) => phone;
+    const {contacts} = useSelector((state) => state);
+    
+    const renderContacts = ({item}) => {
         const {name, avatar, phone} = item;
         return <ContactListItem
             name={name}

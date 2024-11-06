@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 export const mapContacts = (contact) => {
     const {name, picture, phone, cell, email} = contact;
     return{
-        id: 1,
+        id: uuid,
         name : name.first + ' ' + name.last,
         avatar: picture.large,
         phone,
